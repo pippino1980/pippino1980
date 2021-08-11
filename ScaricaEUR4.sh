@@ -1,22 +1,19 @@
 #!/bin/bash
-# Alpi
-#ALPI="https://ftp5.gwdg.de/pub/misc/openstreetmap/openmtbmap/odbl/mtbalpslinux.7z"
-#FRANCIA="https://ftp5.gwdg.de/pub/misc/openstreetmap/openmtbmap/odbl/mtbfrancelinux.7z"
-#GERMANIA="https://ftp5.gwdg.de/pub/misc/openstreetmap/openmtbmap/odbl/mtbgermanylinux.7z"
+
 # Scelta mappa
-mappa=$(zenity --list --checklist --title="Scarica Mappa" --text="seleziona le mappe desiderate" --width=350 --height=550 --column "" --column "Nazione" "" alps "" andorra "" austria "" azores "" belarus "" belgium "" bosnia-herzegovina "" bulgaria "" croatia "" cyprus "" czech-republic "" denmark "" estonia "" faroe-islands "" finland "" france "" georgia "" germany "" great-britain "" greece "" iceland "" ireland "" isle-of-man "" italy "" kosovo "" latvia "" liechtenstein "" lithuania "" luxembourg ""  macedonia ""  malta "" moldova ""  monaco "" montenegro "" netherlands "" norway "" poland "" portugal "" romania "" serbia "" slovakia "" slovenia "" spain "" sweden "" switzerland "" turkey "" ukraine)
+mappa=$(zenity --list --checklist --title="Download Map" --text="seleziona le mappe desiderate" --width=350 --height=550 --column "" --column "Country" "" alps "" andorra "" austria "" azores "" belarus "" belgium "" bosnia-herzegovina "" bulgaria "" croatia "" cyprus "" czech-republic "" denmark "" estonia "" faroe-islands "" finland "" france "" georgia "" germany "" great-britain "" greece "" iceland "" ireland "" isle-of-man "" italy "" kosovo "" latvia "" liechtenstein "" lithuania "" luxembourg ""  macedonia ""  malta "" moldova ""  monaco "" montenegro "" netherlands "" norway "" poland "" portugal "" romania "" serbia "" slovakia "" slovenia "" spain "" sweden "" switzerland "" turkey "" ukraine)
 if [[ "$?" != "0" ]] ; then
     exit 1
 fi
 
 # Scelta Type
-Type=$(zenity --entry --title="Scelta TYPE" --width 350 --text="seleziona il formato desiderato" clas easy hike thin trad wide wint)
+Type=$(zenity --entry --title="Scelta TYPE" --width 350 --text="select the desired format" clas easy hike thin trad wide wint)
 if [[ "$?" != "0" ]] ; then
     exit 1
 fi
 
 # Scelta directory
-QMSMAPDIR=$(zenity --file-selection --directory --width 350 --title="Seleziona la cartella di destinazione")
+QMSMAPDIR=$(zenity --file-selection --directory --width 350 --title="Select the destination folder")
 if [[ "$?" != "0" ]] ; then
     exit 1
 fi
@@ -90,7 +87,7 @@ do
     fi
 
     echo -n " * Downloading... " 
-        $WGET -O "$TMP" "$FILE" 2>&1 | sed -un 's/.*\ \([0-9]\+%\)\ \+\([0-9.,]\+.\)\ [0-9]\+s$/\1\n# Velocità di download \2B\/s/p' | zenity --progress --percentage=0 --width 350 --auto-close --auto-kill
+        $WGET -O "$TMP" "$FILE" 2>&1 | sed -un 's/.*\ \([0-9]\+%\)\ \+\([0-9.,]\+.\)\ [0-9]\+s$/\1\n# Download speed \2B\/s/p' | zenity --progress --percentage=0 --width 350 --auto-close --auto-kill
 
     error_check $?
 
@@ -124,9 +121,9 @@ do
     error_check $?
 
     echo -n " * Cleanup... "
-    rm -rf "${TMP}" "${TMP}_") | zenity --progress --width 350 --pulsate --text "Attendi..." --title "Preparazione e spostamento mappa" --auto-close --auto-kill
+    rm -rf "${TMP}" "${TMP}_") | zenity --progress --width 350 --pulsate --text "Please wait..." --title "Preparation and movement map" --auto-close --auto-kill
     error_check $?
 done
 done
-zenity --info --text="Operazione completata" --width 350
+zenity --info --text="Operation complete" --width 350
 
